@@ -3,7 +3,7 @@
     <head>
         <title>Laravel</title>
 
-        <link href="https://fonts.googleapis.com/css?family=Lato:100" rel="stylesheet" type="text/css">
+        <link href='https://fonts.googleapis.com/css?family=Nothing+You+Could+Do' rel='stylesheet' type='text/css'>
 
         <style>
             html, body {
@@ -15,8 +15,9 @@
                 padding: 0;
                 width: 100%;
                 display: table;
-                font-weight: 100;
-                font-family: 'Lato';
+                font-weight: 300;
+                font-family: 'Nothing You Could Do', cursive;
+                background-color: #D43939;
             }
 
             .container {
@@ -32,13 +33,14 @@
 
             .title {
                 font-size: 96px;
+                color: #fff;
             }
         </style>
     </head>
     <body>
         <div class="container">
             <div class="content">
-                <div class="title">Laravel 5</div>
+                <div class="title">Smultron API</div>
             </div>
         </div>
     </body>
