@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Laravel</title>
+        <title>Smultron API</title>
 
         <link href='https://fonts.googleapis.com/css?family=Nothing+You+Could+Do' rel='stylesheet' type='text/css'>
 
@@ -35,12 +35,18 @@
                 font-size: 96px;
                 color: #fff;
             }
+
+            img {
+                display: block;
+                margin: 0px auto;
+            }
         </style>
     </head>
     <body>
         <div class="container">
             <div class="content">
-                <div class="title">Smultron API</div>
+                <div class="title">
+                    <img src="{{ asset('images/logo.png') }}" alt=""><div style="clear:both;">Smultron API</div>
             </div>
         </div>
     </body>
