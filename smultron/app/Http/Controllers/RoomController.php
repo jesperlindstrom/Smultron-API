@@ -11,16 +11,28 @@ use App\Place;
 
 class RoomController extends Controller
 {
-	public function join($code)
+	/**
+	 * Join a room based on entered code
+	 * @param  [type] $code [description]
+	 * @return [type]       [description]
+	 */
+	public function join(Request $request)
 	{
-		// Find room
-		$room = Room::where('code', $code)->firstOrFail();
+		$room = Room::where('code', $request->code)->first();
+
+		if(!$room) {
+			return response()->json(['ok' => false]);
+		}
 
 		return $this->createUser($room);
 	}
 
+	/**
+	 * Creates a new anonymous user
+	 * @param  [type] $room [description]
+	 * @return [type]       [description]
+	 */
 	private function createUser($room) {
-	 	// Create user
 		$user = new User();
 		$user->room_id = $room->id;
 		$user->save();

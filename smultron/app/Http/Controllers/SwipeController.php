@@ -9,8 +9,6 @@ use App\Swipe;
 use App\Place;
 use App\User;
 
-use DB;
-
 class SwipeController extends Controller
 {
 	/**
@@ -49,8 +47,14 @@ class SwipeController extends Controller
     	return $matches_count;
    }
 
+   /**
+    * Fetches the next place to swipe
+    * @param  [type] $user_id [description]
+    * @param  [type] $room_id [description]
+    * @return [type]          [description]
+    */
    public function getNextPlace($user_id, $room_id) {
-      //Hämta swipes
+      //Fetch all swipes
       $swipes = Swipe::where('user_id', $user_id)->get();
 
       $swiped_places = [];

@@ -11,13 +11,14 @@
 |
 */
 
+//Just to have something at the start
 Route::get('/', function () {
     return view('welcome');
 });
 
 // Guest routes
 Route::post('room', 'RoomController@create');
-Route::post('room/{code}', 'RoomController@join');
+Route::post('room/join', 'RoomController@join');
 
 // User routes
 Route::post('swipe', 'SwipeController@register');
