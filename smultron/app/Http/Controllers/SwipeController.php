@@ -21,6 +21,17 @@ class SwipeController extends Controller
    		$swipe->state = $request->state;
    		$swipe->save();
 
-   		return response()->json(['ok' => true]);
+         return [
+            'matches' => $this->checkMatches($swipe->user->room),
+            'next' => $this->getNextPlace($swipe->user_id)
+         ]
+   }
+
+   private function checkMatches($room) {
+      return [];
+   }
+
+   private function getNextPlace($user_id) {
+      return [];
    }
 }

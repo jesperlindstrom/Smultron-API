@@ -14,4 +14,8 @@ class Swipe extends Model {
 	public function Place() {
 		return $this->hasOne('App\Place');
 	}
+
+	public function User() {
+		return $this->belongsTo('App\User');
+	}
 }
