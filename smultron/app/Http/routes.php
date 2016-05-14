@@ -17,3 +17,5 @@ Route::get('/', function () {
 
 
 Route::resource('room', 'RoomController');
+
+Route::post('swipe', 'SwipeController@register');
