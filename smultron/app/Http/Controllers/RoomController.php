@@ -83,8 +83,15 @@ class RoomController extends Controller
 	}
 
 
-	/** Fetch from google maps api */
+	/**
+	 * Fetch places from destination name
+	 * @param  [type] $destination [description]
+	 * @param  [type] $room_id     [description]
+	 * @return [type]              [description]
+	 */
     public function fetchLocationData($destination, $room_id) {
+
+    	$destination = urlencode($destination);
 
         $location_data = file_get_contents(
             'https://maps.googleapis.com/maps/api/place/textsearch/json?query=' . $destination. '&key=' . $this->gmaps_api_key
@@ -109,11 +116,23 @@ class RoomController extends Controller
         $places_data = json_decode($places_data);
 
         foreach($places_data->results as $place_data) {
-            
+
+        	//Get image
+        	
+        	/*$image_data = file_get_contents(
+        		'https://maps.googleapis.com/maps/api/place/photo?photo_reference=' . $place_data->photos[0]->photo_reference . '&maxwidth=1000&key=' . $this->gmaps_api_key
+        	); */
+
+        	$image = '';
+        	if(isset($place_data->photos)) {
+        		$image = 'https://maps.googleapis.com/maps/api/place/photo?photo_reference=' . $place_data->photos[0]->photo_reference . '&maxwidth=1000&key=' . $this->gmaps_api_key;
+        	}
+
             $place = new Place;
             $place->title = $place_data->name;
             $place->category = serialize($place_data->types);
-            $place->url = 'placeholder';
+            $place->image = $image;
+            $place->address = $place_data->vicinity;
             $place->room_id = $room_id;
             $place->save();
         }

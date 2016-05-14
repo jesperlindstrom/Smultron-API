@@ -16,7 +16,8 @@ class CreatePlacesTable extends Migration
             $table->increments('id');
             $table->string('title');
             $table->string('category');
-            $table->string('url');
+            $table->text('image');
+            $table->string('address');
             $table->integer('room_id');
             $table->timestamps();
         });
