@@ -10,4 +10,8 @@ class Swipe extends Model {
 		'state',
 		'user_id'
 	];
+
+	public function Place() {
+		return $this->hasOne('App\Place');
+	}
 }

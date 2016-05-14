@@ -8,4 +8,8 @@ class User extends Model {
 	protected $fillable = [
 		'room_id',
 	];
+
+	public function swipes() {
+		return $this->hasMany('App\Swipe');
+	}
 }
