@@ -14,14 +14,19 @@ class RoomController extends Controller
 		// Find room
 		$room = Room::where('code', $code)->firstOrFail();
 
-		// Create user
+		return $this->createUser($room);
+	 }
+
+	 private function createUser($room) {
+	 	// Create user
 		$user = new User();
 		$user->room_id = $room->id;
 		$user->save();
 
 		return [
 			'room_id' => $room->id,
-			'user_id' => $user->id
+			'user_id' => $user->id,
+			'code' => $room->code
 		];
 	 }
 
@@ -32,19 +37,10 @@ class RoomController extends Controller
 		$room->code = str_random(6);
 		$room->save();
 
-		// Create user
-		$user = new User();
-		$user->room_id = $room->id;
-		$user->save();
-
-		return [
-			'room_id' => $room->id,
-			'user_id' => $user->id,
-			'code' => $room->code
-		];
+		return $this->createUser($room);
 	}
 
 	public function places() {
-		
+
 	}
 }

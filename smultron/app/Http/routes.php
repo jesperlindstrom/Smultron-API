@@ -15,8 +15,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::post('swipe', 'SwipeController@register');
-
+// Guest routes
 Route::post('room', 'RoomController@create');
-Route::get('room/{code}', 'RoomController@join');
+Route::post('room/{code}', 'RoomController@join');
+
+// User routes
+Route::post('swipe', 'SwipeController@register');
 Route::get('room/places', 'RoomController@places');
