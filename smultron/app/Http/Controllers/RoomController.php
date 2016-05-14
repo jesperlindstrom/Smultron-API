@@ -110,7 +110,7 @@ class RoomController extends Controller
 
         $places_data = file_get_contents(
             'https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=' . $location_lat . ',' . $location_lng . 
-            '&type=bar&radius=10000&key=' . $this->gmaps_api_key
+            '&type=museum&radius=10000&key=' . $this->gmaps_api_key
         );
 
         $places_data = json_decode($places_data);
