@@ -40,14 +40,19 @@ class RoomController extends Controller
     public function store(Request $request)
     {
         if(!$request->destination) {
-             return response()->json(['ok' => false]);
+            return response()->json(['ok' => false]);
         }
+
+        //TODO: Kolla så att den är unik...
+
+        $code = str_random(6);
 
         $room = new Room;
         $room->destination = $request->destination;
+        $room->code = $code;
         $room->save();
 
-        return response()->json(['ok' => true]);
+        return response()->json(['ok' => true, 'code' => $code]);
     }
 
     /**
@@ -56,9 +61,10 @@ class RoomController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($code)
     {
-        //
+        $room = Room::where('code', $code)->firstOrFail();
+        return $room;
     }
 
     /**
@@ -79,9 +85,17 @@ class RoomController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $code)
     {
-        //
+        if(!$request->destination) {
+            return response()->json(['ok' => false]);
+        }
+
+        $room = Room::where('code', $code)->firstOrFail();
+        $room->destination = $request->destination;
+        $room->save();
+
+        return response()->json(['ok' => true]);
     }
 
     /**
@@ -90,8 +104,10 @@ class RoomController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($code)
     {
-        //
+        $deleted = Room::where('code', $code)->delete();
+
+        return response()->json(['ok' => $deleted]);
     }
 }
