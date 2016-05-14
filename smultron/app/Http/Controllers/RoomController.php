@@ -26,7 +26,8 @@ class RoomController extends Controller
 		return [
 			'room_id' => $room->id,
 			'user_id' => $user->id,
-			'code' => $room->code
+			'code' => $room->code,
+			'destination' => $room->destination
 		];
 	 }
 
