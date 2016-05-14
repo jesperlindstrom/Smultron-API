@@ -16,6 +16,7 @@ class CreateSwipesTable extends Migration
             $table->integer('user_id');
             $table->integer('place_id');
             $table->boolean('state');
+            $table->timestamps();
         });
     }
 

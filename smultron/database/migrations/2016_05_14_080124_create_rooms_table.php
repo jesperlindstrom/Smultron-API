@@ -16,6 +16,7 @@ class CreateRoomsTable extends Migration
             $table->increments('id');
             $table->string('destination');
             $table->string('code')->unique();
+            $table->timestamps();
         });
     }
 
