@@ -11,7 +11,10 @@ class RoomController extends Controller
 {
 	public function join($code)
 	{
+		// Find room
 		$room = Room::where('code', $code)->firstOrFail();
+
+		// Create user
 		$user = new User();
 		$user->room_id = $room->id;
 		$user->save();
@@ -39,5 +42,9 @@ class RoomController extends Controller
 			'user_id' => $user->id,
 			'code' => $room->code
 		];
+	}
+
+	public function places() {
+		
 	}
 }
