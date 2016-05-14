@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Room;
 use App\User;
+use App\Swipe;
+use App\Place;
 
 class RoomController extends Controller
 {
@@ -15,9 +17,9 @@ class RoomController extends Controller
 		$room = Room::where('code', $code)->firstOrFail();
 
 		return $this->createUser($room);
-	 }
+	}
 
-	 private function createUser($room) {
+	private function createUser($room) {
 	 	// Create user
 		$user = new User();
 		$user->room_id = $room->id;
@@ -41,7 +43,20 @@ class RoomController extends Controller
 		return $this->createUser($room);
 	}
 
-	public function places() {
+	public function matches($room_id) {
+		
+   		//Get amount of users in room
+   		$room_user_count = User::where('room_id', $room_id)->count();
 
+		$matches = Swipe::select('place_id')
+			->groupBy('place_id', 'state')
+			->having('state', '=', 1)
+			->havingRaw('count(*) = ' . $room_user_count)
+			->get();
+
+
+		$places = Place::whereIn('id', $matches)->get();
+
+    	return $places;
 	}
 }

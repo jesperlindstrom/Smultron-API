@@ -21,4 +21,5 @@ Route::post('room/{code}', 'RoomController@join');
 
 // User routes
 Route::post('swipe', 'SwipeController@register');
-Route::get('room/places', 'RoomController@places');
+Route::get('room/{room_id}/{user_id}/next', 'SwipeController@getNextPlace');
+Route::get('room/{room_id}', 'RoomController@matches');
