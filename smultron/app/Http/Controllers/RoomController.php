@@ -11,6 +11,8 @@ use App\Place;
 
 class RoomController extends Controller
 {
+	private $gmaps_api_key = 'AIzaSyBspjy1O7ckHFWUhLC9yu1XNUVuzrveA0s';
+
 	/**
 	 * Join a room based on entered code
 	 * @param  [type] $code [description]
@@ -45,14 +47,22 @@ class RoomController extends Controller
 		];
 	 }
 
+	/**
+	 * Create room
+	 * @param  Request $request [description]
+	 * @return [type]           [description]
+	 */
 	public function create(Request $request) {
-		// Create room
 		$room = new Room();
 		$room->destination = $request->destination;
 		$room->code = str_random(6);
 		$room->save();
 
-		return $this->createUser($room);
+		return [
+			'user' => $this->createUser($room),
+			'places' => $this->fetchLocationData($request->destination, $room->id)
+		];
+		
 	}
 
 	public function matches($room_id) {
@@ -71,4 +81,43 @@ class RoomController extends Controller
 
     	return $places;
 	}
+
+
+	/** Fetch from google maps api */
+    public function fetchLocationData($destination, $room_id) {
+
+        $location_data = file_get_contents(
+            'https://maps.googleapis.com/maps/api/place/textsearch/json?query=' . $destination. '&key=' . $this->gmaps_api_key
+        );
+
+        if(empty($location_data)) {
+            return response()->json(['ok' => false]);
+        }
+
+        $location_data = json_decode($location_data);
+
+
+        $location_lat = $location_data->results[0]->geometry->location->lat;
+        $location_lng = $location_data->results[0]->geometry->location->lng;
+
+
+        $places_data = file_get_contents(
+            'https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=' . $location_lat . ',' . $location_lng . 
+            '&type=bar&radius=10000&key=' . $this->gmaps_api_key
+        );
+
+        $places_data = json_decode($places_data);
+
+        foreach($places_data->results as $place_data) {
+            
+            $place = new Place;
+            $place->title = $place_data->name;
+            $place->category = serialize($place_data->types);
+            $place->url = 'placeholder';
+            $place->room_id = $room_id;
+            $place->save();
+        }
+
+        return Place::where('room_id', $room_id)->get();
+    }   
 }

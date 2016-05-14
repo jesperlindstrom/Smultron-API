@@ -24,3 +24,7 @@ Route::post('room/join', 'RoomController@join');
 Route::post('swipe', 'SwipeController@register');
 Route::get('room/{room_id}/{user_id}/next', 'SwipeController@getNextPlace');
 Route::get('room/{room_id}', 'RoomController@matches');
+
+
+//Temp
+Route::get('place/{location}', 'RoomControler@fetchLocationData');
