@@ -15,5 +15,5 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-
-Route::resource('room', 'RoomController');
+Route::post('room', 'RoomController@create');
+Route::get('room/{code}', 'RoomController@join');
