@@ -9,6 +9,11 @@ use App\Swipe;
 
 class SwipeController extends Controller
 {
+	/**
+	 * Register swipe
+	 * @param  Request $request POST-data
+	 * @return json           Return ok
+	 */
    public function register(Request $request) {
    		$swipe = new Swipe;
    		$swipe->user_id = $request->user_id;
